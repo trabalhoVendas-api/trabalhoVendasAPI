@@ -10,6 +10,24 @@ import br.com.serratec.dto.LancamentoVendasResponseDTO;
 import br.com.serratec.entity.LancamentoVendas;
 import br.com.serratec.service.LancamentoService;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PathVariable;
+import br.com.serratec.dto.LancamentoVendasResponseDTO;
+import br.com.serratec.entity.LancamentoVendas;
+import br.com.serratec.entity.VendedorAutonomo;
+import br.com.serratec.repository.LancamentoVendasRepository;
+import br.com.serratec.repository.VendedorAutonomoRepository;
+import br.com.serratec.service.LancamentoVendasService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 @RestController
 @RequestMapping("/lancamentos")
 public class LancamentoController {
