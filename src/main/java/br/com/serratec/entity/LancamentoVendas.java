@@ -2,6 +2,8 @@ package br.com.serratec.entity;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,16 +14,18 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class LancamentoVendas {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	private LocalDate data;
 	private Double valor;
-
+	
+	@JsonBackReference
 	@ManyToOne
-	@JoinColumn(name = "vendedor_id")
-	private Vendedor vendedor;
+	@JoinColumn(name = "vendedor_id", nullable = false )
+	private VendedorAutonomo vendedor;
 
+	
 	public Long getId() {
 		return id;
 	}
@@ -50,8 +54,13 @@ public class LancamentoVendas {
 		return vendedor;
 	}
 
-	public void setVendedor(Vendedor vendedor) {
+	public void setVendedor(VendedorAutonomo vendedor) {
 		this.vendedor = vendedor;
+	}
+
+	@Override
+	public String toString() {
+		return "LancamentoVendas [id=" + id + ", data=" + data + ", valor=" + valor + ", vendedor=" + vendedor + "]";
 	}
 
 }

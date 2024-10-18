@@ -9,14 +9,17 @@ public class LancamentoVendasResponseDTO {
 	
 	private LocalDate data;
 	private double valor;
-	private Vendedor nomeVendedor;
+	private String nomeVendedor;
 	
 	public LancamentoVendasResponseDTO(LancamentoVendas lancamentoVendas) {
 		this.data = lancamentoVendas.getData();
 		this.valor = lancamentoVendas.getValor();
-		this.nomeVendedor = lancamentoVendas.getVendedor();
+		this.nomeVendedor = lancamentoVendas.getVendedor().getNome();
 		
 		
+	}
+	public LancamentoVendasResponseDTO() {
+		super();
 	}
 	public LocalDate getData() {
 		return data;
@@ -30,10 +33,10 @@ public class LancamentoVendasResponseDTO {
 	public void setValor(double valor) {
 		this.valor = valor;
 	}
-	public Vendedor getNomeVendedor() {
+	public String getNomeVendedor() {
 		return nomeVendedor;
 	}
-	public void setNomeVendedor(Vendedor nomeVendedor) {
+	public void setNomeVendedor(String nomeVendedor) {
 		this.nomeVendedor = nomeVendedor;
 	}
 	

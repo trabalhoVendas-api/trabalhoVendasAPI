@@ -15,4 +15,9 @@ public class VendedorAutonomo extends Vendedor {
 		this.comissao = comissao;
 	}
 
+	@Override
+	public String toString() {
+		return "VendedorAutonomo [comissao=" + comissao + ", toString()=" + super.toString() + "]";
+	}
+
 }

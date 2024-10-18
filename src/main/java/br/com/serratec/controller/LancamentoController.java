@@ -3,25 +3,20 @@ package br.com.serratec.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import br.com.serratec.dto.LancamentoVendasResponseDTO;
-import br.com.serratec.entity.LancamentoVendas;
-import br.com.serratec.service.LancamentoService;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import br.com.serratec.dto.LancamentoVendasResponseDTO;
 import br.com.serratec.entity.LancamentoVendas;
-import br.com.serratec.entity.VendedorAutonomo;
-import br.com.serratec.repository.LancamentoVendasRepository;
-import br.com.serratec.repository.VendedorAutonomoRepository;
-import br.com.serratec.service.LancamentoVendasService;
+import br.com.serratec.repository.LancamentoRepository;
+import br.com.serratec.service.LancamentoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -36,7 +31,7 @@ public class LancamentoController {
     private LancamentoService lancamentoService;
 
     @Autowired
-    private LancamentoVendasRepository lancamentoVendasRepository;
+    private LancamentoRepository lancamentoVendasRepository;
 
     @GetMapping("/{id}")
     public ResponseEntity<List<LancamentoVendasResponseDTO>> listarPorId(@PathVariable Long id) {
@@ -44,6 +39,17 @@ public class LancamentoController {
         return ResponseEntity.ok(dto);
     }
 
+    @Operation(summary = "Insere um nova venda", description = "A resposta retorna os detalhes da venda inserida..")
+	@ApiResponses(value = { 
+			@ApiResponse(responseCode = "201", 
+			content = {@Content(schema = @Schema(implementation = LancamentoVendas.class), mediaType = "application/json")},
+			description = "Usuário cadastrado com sucesso"),
+			@ApiResponse(responseCode = "401", description = "Erro de autenticação"),
+			@ApiResponse(responseCode = "403", description = "Não há permissão para acessar o recurso"),
+			@ApiResponse(responseCode = "404", description = "Recurso não encontrado"),
+			@ApiResponse(responseCode = "505", description = "Exceção interna da aplicação") })
+
+    
     @PostMapping
     public ResponseEntity<LancamentoVendas> inserirLancamento(@RequestBody LancamentoVendas lancamentoVendas) {
         LancamentoVendas novoLancamento = lancamentoService.inserirLancamento(lancamentoVendas);
@@ -65,8 +71,8 @@ public class LancamentoController {
             LancamentoVendasResponseDTO dto = new LancamentoVendasResponseDTO();
             dto.setData(lancamento.getData());
             dto.setValor(lancamento.getValor());
-            dto.setNomeVendedor(lancamento.getVendedorAutonomo().getNome());
-            return dto});
+            dto.setNomeVendedor(lancamento.getVendedor().getNome());
+            return dto;});
         
         return ResponseEntity.ok(response);
         //exemplo de requisição por valor decrescente no postman: 

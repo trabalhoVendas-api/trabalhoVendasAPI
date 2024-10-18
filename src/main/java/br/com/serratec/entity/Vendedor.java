@@ -3,13 +3,14 @@ package br.com.serratec.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
-import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Email;
@@ -33,6 +34,7 @@ public abstract class Vendedor {
 	@DecimalMin(value = "1412.00", message = "O salário não pode ser menor que o salário minimo")
 	private Double salario;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy = "vendedor")
 	private List<LancamentoVendas>  lancamentos = new ArrayList<>();
 
@@ -74,6 +76,12 @@ public abstract class Vendedor {
 
 	public void setSalario(Double salario) {
 		this.salario = salario;
+	}
+
+	@Override
+	public String toString() {
+		return "Vendedor [id=" + id + ", nome=" + nome + ", email=" + email + ", salario=" + salario + ", lancamentos="
+				+ lancamentos + "]";
 	}
 
 }
