@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,11 +14,18 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class LancamentoVendas {
+	
+	@Schema(description = "Identificador único do usuário")
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	
 	private Long id;
-
+	
+	@Schema(description = "Data do lançamento da venda")
+	
 	private LocalDate data;
+	
+	@Schema(description = "Valor das vendas")
 	private Double valor;
 	
 	@JsonBackReference

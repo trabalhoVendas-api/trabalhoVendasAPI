@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,18 +23,23 @@ import jakarta.validation.constraints.NotNull;
 public abstract class Vendedor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	
+	@Schema(description = "Identificador único do Vendedor")
 	private Long id;
 	
 	@NotBlank(message = "O nome não pode ser vazio")
 	@NotNull(message = "O nome não pode ser nulo")
+	@Schema(description = "Nome do Vendedor")
 	private String nome;
 	
+	@Schema(description = "Email do Vendedor")
 	@Email
 	private String email;
 	
 	@DecimalMin(value = "1412.00", message = "O salário não pode ser menor que o salário minimo")
 	private Double salario;
 	
+	@Schema(description = "Email do Vendedor")
 	@JsonManagedReference
 	@OneToMany(mappedBy = "vendedor")
 	private List<LancamentoVendas>  lancamentos = new ArrayList<>();

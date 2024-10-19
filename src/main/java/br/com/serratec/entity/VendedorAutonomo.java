@@ -1,10 +1,12 @@
 package br.com.serratec.entity;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 
 @Entity
 public class VendedorAutonomo extends Vendedor {
-
+	
+	@Schema(description = "Comissao do vendedor Autonomo")
 	private Double comissao;
 
 	public Double getComissao() {
